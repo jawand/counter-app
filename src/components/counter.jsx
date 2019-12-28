@@ -1,24 +1,42 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
+  componentDidUpdate(prevProps, prevState) {}
+
+  // This method is called just before a component is removed from virtual DOM.
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+  }
+
   render() {
     return (
-      <div>
-        <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
-        <button
-          className="btn btn-secondary btn-sm"
-          onClick={() => this.props.handleIncrement(this.props.counter)}
-        >
-          Increment
-        </button>
-        <button
-          className="btn btn-danger btn-sm m-2"
-          onClick={() =>
-            this.props.onDelete({ counterId: this.props.counter.id })
-          }
-        >
-          Delete
-        </button>
+      <div className="row">
+        <div className="col-1">
+          <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
+        </div>
+        <div className="col">
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => this.props.handleIncrement(this.props.counter)}
+          >
+            +
+          </button>
+          <button
+            className="btn btn-secondary btn-sm m-2"
+            disabled={this.props.counter.value === 0 ? "disabled" : ""}
+            onClick={() => this.props.handleDecrement(this.props.counter)}
+          >
+            -
+          </button>
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={() =>
+              this.props.onDelete({ counterId: this.props.counter.id })
+            }
+          >
+            X
+          </button>
+        </div>
       </div>
     );
   }
